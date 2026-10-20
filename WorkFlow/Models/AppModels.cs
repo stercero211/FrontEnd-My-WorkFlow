@@ -32,11 +32,13 @@ public class FeedPostItem
 
     public static LinearGradientBrush GetGradient(PostTypeCategory category)
     {
-        Color topColor = category switch
+        // Colores con mayor riqueza cromática y opacidad moderada (~40% arriba)
+        // para un aspecto colorido pero suave a la vista.
+        (Color topColor, Color midColor) = category switch
         {
-            PostTypeCategory.Assignment => Color.FromArgb("#35F87171"), // Rojo/Coral Tareas
-            PostTypeCategory.Material => Color.FromArgb("#355C93F9"), // Azul Materiales
-            _ => Color.FromArgb("#355EEAD4")  // Menta/Teal Anuncios
+            PostTypeCategory.Assignment => (Color.FromArgb("#66FF5252"), Color.FromArgb("#20FF5252")), // Rojo/Coral
+            PostTypeCategory.Material => (Color.FromArgb("#663B82F6"), Color.FromArgb("#203B82F6")), // Azul
+            _ => (Color.FromArgb("#6614B8A6"), Color.FromArgb("#2014B8A6"))  // Teal/Menta
         };
 
         return new LinearGradientBrush
@@ -44,10 +46,11 @@ public class FeedPostItem
             StartPoint = new Point(0, 0),
             EndPoint = new Point(0, 1),
             GradientStops = new GradientStopCollection
-            {
-                new GradientStop(topColor, 0.0f),
-                new GradientStop(Colors.Transparent, 0.85f)
-            }
+        {
+            new GradientStop(topColor, 0.0f),
+            new GradientStop(midColor, 0.4f),
+            new GradientStop(Colors.Transparent, 0.85f)
+        }
         };
     }
 }
