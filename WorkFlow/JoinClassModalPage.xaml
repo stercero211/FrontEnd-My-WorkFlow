@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WorkFlow.JoinClassModalPage"
+             Title="Unirse a una clase"
+             BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#12161A}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Degradado insignia WorkFlow -->
+            <LinearGradientBrush x:Key="WorkflowBrandBrush" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#5C93F9" Offset="0.0" />
+                <GradientStop Color="#5EEAD4" Offset="0.6" />
+                <GradientStop Color="#86EFAC" Offset="1.0" />
+            </LinearGradientBrush>
+
+            <Shadow x:Key="ModalCardShadow" Brush="#000000" Opacity="0.08" Offset="0,3" Radius="8" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!-- Estructura Raíz -->
+    <Grid RowDefinitions="Auto, *">
+
+        <!-- ============================================================== -->
+        <!-- 1. BARRA SUPERIOR DE ACCIONES (CANCELAR / UNIRSE)              -->
+        <!-- ============================================================== -->
+        <Border Grid.Row="0"
+                StrokeThickness="0"
+                Padding="16,12"
+                BackgroundColor="{AppThemeBinding Light=White, Dark=#1E232B}">
+            <Border.Shadow>
+                <Shadow Brush="#000000" Opacity="0.05" Offset="0,2" Radius="4" />
+            </Border.Shadow>
+
+            <Grid ColumnDefinitions="Auto, *, Auto" VerticalOptions="Center">
+                <!-- Botón de Cerrar / Cancelar -->
+                <ImageButton Grid.Column="0"
+                             Source="icon_close.png"
+                             WidthRequest="24"
+                             HeightRequest="24"
+                             BackgroundColor="Transparent"
+                             Clicked="OnCancelClicked" />
+
+                <!-- Título Central -->
+                <Label Grid.Column="1"
+                       Text="Unirte a una clase"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       Margin="14,0,0,0"
+                       VerticalOptions="Center"
+                       TextColor="{AppThemeBinding Light=#0F172A, Dark=#F8FAFC}" />
+
+                <!-- Botón Principal "Unirse" -->
+                <Border Grid.Column="2"
+                        x:Name="JoinButtonBorder"
+                        HeightRequest="36"
+                        Padding="18,0"
+                        StrokeShape="RoundRectangle 18"
+                        StrokeThickness="0"
+                        Background="{StaticResource WorkflowBrandBrush}"
+                        Opacity="0.5">
+                    <Grid>
+                        <Label Text="Unirse"
+                               FontSize="13"
+                               FontAttributes="Bold"
+                               TextColor="#0F172A"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                        <Button x:Name="JoinButton"
+                                BackgroundColor="Transparent"
+                                IsEnabled="False"
+                                Clicked="OnJoinClassClicked" />
+                    </Grid>
+                </Border>
+            </Grid>
+        </Border>
+
+        <!-- ============================================================== -->
+        <!-- 2. CONTENIDO PRINCIPAL                                         -->
+        <!-- ============================================================== -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="20,16" Spacing="16">
+
+                <!-- TARJETA 1: IDENTIFICACIÓN DE CUENTA INSTITUCIONAL -->
+                <Border StrokeThickness="1"
+                        Stroke="{AppThemeBinding Light=#E2E8F0, Dark=#2D3748}"
+                        StrokeShape="RoundRectangle 14"
+                        Padding="16"
+                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E232B}"
+                        Shadow="{StaticResource ModalCardShadow}">
+
+                    <Grid RowDefinitions="Auto, Auto" RowSpacing="12">
+                        <Label Grid.Row="0"
+                               Text="Has iniciado sesión como"
+                               FontSize="12"
+                               TextColor="{AppThemeBinding Light=#64748B, Dark=#94A3B8}" />
+
+                        <Grid Grid.Row="1" ColumnDefinitions="Auto, *, Auto" ColumnSpacing="12" VerticalOptions="Center">
+                            <!-- Avatar con borde menta -->
+                            <Border Grid.Column="0"
+                                    WidthRequest="42"
+                                    HeightRequest="42"
+                                    StrokeShape="RoundRectangle 21"
+                                    Stroke="#5EEAD4"
+                                    StrokeThickness="1.5">
+                                <Image Source="avatar_user.png" Aspect="AspectFill" />
+                            </Border>
+
+                            <!-- Nombre y Correo Institucional -->
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                <Label Text="Alumno Informática"
+                                       FontSize="14"
+                                       FontAttributes="Bold"
+                                       TextColor="{AppThemeBinding Light=#0F172A, Dark=#F8FAFC}" />
+                                <Label Text="alumno.cecyt13@ipn.mx"
+                                       FontSize="12"
+                                       TextColor="{AppThemeBinding Light=#64748B, Dark=#94A3B8}" />
+                            </VerticalStackLayout>
+
+                            <!-- Botón Cambiar Cuenta -->
+                            <Button Grid.Column="2"
+                                    Text="Cambiar"
+                                    FontSize="12"
+                                    TextColor="#5C93F9"
+                                    BackgroundColor="Transparent"
+                                    Padding="8,0"
+                                    Clicked="OnChangeAccountClicked" />
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <!-- TARJETA 2: ENTRADA DEL CÓDIGO DE CLASE -->
+                <Border StrokeThickness="1"
+                        Stroke="{AppThemeBinding Light=#E2E8F0, Dark=#2D3748}"
+                        StrokeShape="RoundRectangle 14"
+                        Padding="18"
+                        BackgroundColor="{AppThemeBinding Light=White, Dark=#1E232B}"
+                        Shadow="{StaticResource ModalCardShadow}">
+
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="Código de la clase"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="{AppThemeBinding Light=#0F172A, Dark=#F8FAFC}" />
+
+                        <Label Text="Pídele el código de 5 a 7 caracteres a tu profesor e ingrésalo aquí."
+                               FontSize="13"
+                               TextColor="{AppThemeBinding Light=#64748B, Dark=#94A3B8}" />
+
+                        <!-- Caja de entrada estilizada -->
+                        <Border x:Name="CodeInputContainer"
+                                StrokeThickness="1.5"
+                                Stroke="{AppThemeBinding Light=#CBD5E1, Dark=#334155}"
+                                StrokeShape="RoundRectangle 10"
+                                BackgroundColor="{AppThemeBinding Light=#F8FAFC, Dark=#12161A}"
+                                Margin="0,6,0,0"
+                                Padding="12,4">
+
+                            <Entry x:Name="ClassCodeEntry"
+                                   Placeholder="Ej. 7x9qab"
+                                   PlaceholderColor="{AppThemeBinding Light=#94A3B8, Dark=#64748B}"
+                                   TextColor="{AppThemeBinding Light=#0F172A, Dark=#F8FAFC}"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   CharacterSpacing="2"
+                                   MaxLength="7"
+                                   ClearButtonVisibility="WhileEditing"
+                                   TextChanged="OnCodeTextChanged"
+                                   Focused="OnEntryFocused"
+                                   Unfocused="OnEntryUnfocused" />
+                        </Border>
+
+                        <!-- Mensaje de advertencia o error en caso de formato no válido -->
+                        <Label x:Name="ErrorMessageLabel"
+                               Text="El código debe tener entre 5 y 7 caracteres alfanuméricos."
+                               FontSize="11"
+                               TextColor="#EF4444"
+                               IsVisible="False" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- TARJETA 3: INSTRUCCIONES Y REGLAS -->
+                <VerticalStackLayout Spacing="8" Padding="6,4">
+                    <Label Text="Para acceder con un código:"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light=#475569, Dark=#94A3B8}" />
+
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="•" TextColor="#5EEAD4" FontSize="14" />
+                        <Label Text="Usa una cuenta institucional autorizada."
+                               FontSize="12"
+                               TextColor="{AppThemeBinding Light=#64748B, Dark=#94A3B8}" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="8">
+                        <Label Text="•" TextColor="#5EEAD4" FontSize="14" />
+                        <Label Text="El código no debe incluir espacios ni signos especiales."
+                               FontSize="12"
+                               TextColor="{AppThemeBinding Light=#64748B, Dark=#94A3B8}" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <!-- Indicador de carga durante la llamada a la API -->
+                <ActivityIndicator x:Name="LoadingSpinner"
+                                   IsRunning="False"
+                                   IsVisible="False"
+                                   Color="#5EEAD4"
+                                   HorizontalOptions="Center"
+                                   Margin="0,10,0,0" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>
